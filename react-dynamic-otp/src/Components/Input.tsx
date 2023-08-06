@@ -4,9 +4,9 @@ type InputProp = {
   index: number;
   data: Record<string, string>;
   setData: React.Dispatch<React.SetStateAction<any>>;
-  nextRef: React.RefObject<unknown>;
-  currentRef: React.RefObject<unknown>;
-  prevRef: React.RefObject<unknown>;
+  nextRef: React.RefObject<HTMLInputElement>;
+  currentRef: React.RefObject<HTMLInputElement>;
+  prevRef: React.RefObject<HTMLInputElement>;
   length: number;
   verifyInput: (e: string) => void;
 };
@@ -19,6 +19,7 @@ const Input = ({
   currentRef,
   prevRef,
   verifyInput,
+  length,
 }: InputProp) => {
   return (
     <input
@@ -37,7 +38,7 @@ const Input = ({
       onKeyDown={(e) => {
         if (e.key === "e") e.preventDefault();
         if (e.key === "Backspace") {
-          if (!data[index] && prevRef) prevRef.current?.focus();
+          if (!data[index] && prevRef) prevRef?.current?.focus();
           setData((prev: Record<string, string>) => {
             const second = prev;
             second[index] = "";
@@ -45,10 +46,10 @@ const Input = ({
           });
           if (index + 1 === length) verifyInput(Object.values(data).join(""));
         } else if (!data[index] && e.key === "Backspace" && prevRef) {
-          prevRef.current?.focus();
+          prevRef?.current?.focus();
         }
         if (data[index] && e.key !== "Backspace" && nextRef) {
-          nextRef.current?.focus();
+          nextRef?.current?.focus();
         }
       }}
       type="number"

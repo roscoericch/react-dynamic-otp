@@ -1,6 +1,5 @@
 import Input from "./Input";
 import React, { useRef, useState, useEffect } from "react";
-import useReference from "./useReference";
 
 type InputGroupProps = {
   verifyInput: (otp: String) => void;
@@ -8,28 +7,15 @@ type InputGroupProps = {
 };
 
 const OtpInputv2 = ({ numOfInputs, verifyInput }: InputGroupProps) => {
-  const data = new Array().fill(1);
-  //   const items = ["Item 1", "Item 2", "Item 3"];
-  //   const itemRefs = useRef([]);
-
-  //   useEffect(() => {
-  //     // Populate the itemRefs array with refs for each item
-  //     itemRefs = data.map(() => React.createRef());
-  //   }, [items]);
-
-  //   const handleFocus = (index) => {
-  //     if (itemRefs.current[index].current) {
-  //       itemRefs.current[index].current.focus();
-  //     }
-  //   };
+  const data = new Array(numOfInputs).fill(1);
   const inputData = data.map((e, i) => {
-    // const { ref } = useReference();
-    const ref = React.createRef();
+    const ref = React.createRef<HTMLInputElement>();
     return {
       i: "",
       ref,
     };
   });
+  console.log(inputData);
   const [rawData, setRawData] = useState(
     data.reduce((e, i) => ({ ...e, [i]: i }))
   );
@@ -41,9 +27,9 @@ const OtpInputv2 = ({ numOfInputs, verifyInput }: InputGroupProps) => {
           setData={setRawData}
           currentRef={e.ref}
           index={i}
-          length={arr.length}
-          nextRef={arr[i + 1].ref}
-          prevRef={arr[i - 1].ref}
+          length={numOfInputs}
+          nextRef={arr[i + 1]?.ref}
+          prevRef={arr[i - 1]?.ref}
           verifyInput={(e) => {
             console.log(e);
           }}

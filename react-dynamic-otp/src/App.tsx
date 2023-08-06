@@ -1,5 +1,4 @@
 import OtpInputv2 from "./Components/OtpInputv2";
-import "./App.css";
 
 function App() {
   return (
